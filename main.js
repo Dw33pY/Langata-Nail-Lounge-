@@ -5,13 +5,18 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ---------- PRELOADER (2.5s limit) ---------- */
+  /* ---------- PRELOADER ----------
+     Hides the preloader after a delay.
+     The number below (2500) is the time in milliseconds (ms).
+     1000ms = 1 second. Increase to show preloader longer, decrease to show it shorter. */
   const preloader = document.getElementById('preloader');
   setTimeout(() => {
     preloader.classList.add('hidden');
-  }, 2500); 
+  }, 3500);   /* ← Preloader duration in ms */
 
-  /* ---------- NAVBAR & REVEAL OPTIMIZATION ---------- */
+  /* ---------- NAVBAR & REVEAL OPTIMIZATION ----------
+     Handles navbar background change on scroll, scroll progress bar width,
+     back-to-top button visibility, and reveal-on-scroll animations. */
   const navbar = document.getElementById('navbar');
   const scrollProgress = document.getElementById('scrollProgress');
   const backToTop = document.getElementById('backToTop');
@@ -21,16 +26,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const handleScroll = () => {
     const scrollY = window.scrollY;
 
+    // Toggle 'scrolled' class on navbar after scrolling 50px down
     if (scrollY > 50) navbar.classList.add('scrolled');
     else navbar.classList.remove('scrolled');
 
+    // Update scroll progress bar width based on how far we've scrolled
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = (scrollY / docHeight) * 100;
     scrollProgress.style.width = progress + '%';
 
+    // Show back-to-top button after scrolling 500px down
     if (scrollY > 500) backToTop.classList.add('show');
     else backToTop.classList.remove('show');
 
+    // Reveal elements when they enter the viewport (85% of viewport height)
     const triggerPoint = window.innerHeight * 0.85;
     elementsToReveal.forEach(el => {
       const rect = el.getBoundingClientRect();
@@ -42,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ticking = false;
   };
 
+  // Use requestAnimationFrame for smooth, performance-friendly scrolling
   window.addEventListener('scroll', () => {
     if (!ticking) {
       window.requestAnimationFrame(handleScroll);
@@ -49,9 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true });
 
-  handleScroll(); 
+  handleScroll();   // Run once on load
 
-  /* ---------- MOBILE MENU ---------- */
+  /* ---------- MOBILE MENU ----------
+     Opens/closes the fullscreen mobile menu.
+     Also locks body scroll while the menu is open. */
   const menuToggle = document.getElementById('menuToggle');
   const mobileMenu = document.getElementById('mobileMenu');
   const mobileClose = document.getElementById('mobileClose');
@@ -78,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   mobileLinks.forEach(link => link.addEventListener('click', () => toggleMenu(false)));
   
+  // Close menu with the Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && mobileMenu.classList.contains('active')) toggleMenu(false);
   });
@@ -85,7 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- BACK TO TOP ---------- */
   backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  /* ---------- SERVICES FILTER ---------- */
+  /* ---------- SERVICES FILTER ----------
+     Filters service categories by their data-cat attribute.
+     Buttons with data-filter="all" show every category. */
   const filterBtns = document.querySelectorAll('.filter-btn');
   const categories = document.querySelectorAll('.service-category');
 
@@ -105,7 +120,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ---------- BOOKING FORM → WHATSAPP ---------- */
+  /* ---------- MOBILE GALLERY CAROUSEL NAVIGATION ----------
+     Scrolls the gallery horizontally by 80% of the viewport width.
+     Only functional on mobile where the carousel layout is active. */
+  const galleryGrid = document.querySelector('.masonry-grid');
+  const galleryPrev = document.getElementById('galleryPrev');
+  const galleryNext = document.getElementById('galleryNext');
+
+  if (galleryGrid && galleryPrev && galleryNext) {
+    galleryPrev.addEventListener('click', () => {
+      // Scroll left by 80% of the grid's visible width
+      galleryGrid.scrollBy({ left: -galleryGrid.clientWidth * 0.8, behavior: 'smooth' });
+    });
+    galleryNext.addEventListener('click', () => {
+      // Scroll right by 80% of the grid's visible width
+      galleryGrid.scrollBy({ left: galleryGrid.clientWidth * 0.8, behavior: 'smooth' });
+    });
+  }
+
+  /* ---------- BOOKING FORM → WHATSAPP ----------
+     Form data is composed into a WhatsApp message and opens wa.me link.
+     Phone number below (254720158167) is the destination WhatsApp number.
+     Change it if you want to redirect to a different number. */
   const bookingForm = document.getElementById('bookingForm');
   const formNote = document.getElementById('formNote');
 
@@ -119,6 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const date = formData.get('date');
       const notes = formData.get('notes');
 
+      // Build WhatsApp message — %0A = newline character in URL encoding
       const message = `Hello Langata Nail Lounge! I'd like to book an appointment.%0A%0AName: ${name}%0APhone: ${phone}%0AService: ${service}%0APreferred Date: ${date}%0ANotes: ${notes || 'None'}`;
       const waUrl = `https://wa.me/254720158167?text=${message}`;
 
@@ -129,11 +166,12 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open(waUrl, '_blank');
         bookingForm.reset();
         setTimeout(() => { formNote.textContent = ''; formNote.className = 'form-note'; }, 2000);
-      }, 800);
+      }, 800);   /* 800ms delay before opening WhatsApp */
     });
   }
 
-  /* ---------- LIGHTBOX FUNCTIONALITY ---------- */
+  /* ---------- LIGHTBOX FUNCTIONALITY ----------
+     Opens gallery images in a fullscreen overlay with prev/next navigation. */
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
@@ -175,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
   lightboxPrev.addEventListener('click', showPrev);
   lightboxNext.addEventListener('click', showNext);
 
-  // Swipe support for mobile
+  // Swipe support for mobile — swipe threshold is 50px
   let touchStartX = 0;
   lightbox.addEventListener('touchstart', (e) => {
     touchStartX = e.changedTouches[0].screenX;
@@ -190,7 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, false);
 
-  /* ---------- CUSTOM CURSOR ---------- */
+  /* ---------- CUSTOM CURSOR ----------
+     Only runs on devices with a precise pointer (mouse, not touch).
+     The follower lags behind the cursor for a smooth trailing effect. */
   const cursor = document.getElementById('cursor');
   const follower = document.getElementById('cursorFollower');
 
@@ -204,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
       cursor.style.top = mouseY + 'px';
     });
 
+    // Trailing follower — 0.15 is the lag/speed factor (lower = more lag)
     const animateFollower = () => {
       followX += (mouseX - followX) * 0.15;
       followY += (mouseY - followY) * 0.15;
@@ -213,6 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     animateFollower();
 
+    // Hover effect on interactive elements
     const hoverables = document.querySelectorAll('a, button, .service-item, .masonry-item');
     hoverables.forEach(el => {
       el.addEventListener('mouseenter', () => follower.classList.add('hover'));
@@ -220,14 +262,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------- ACTIVE NAV ON SCROLL ---------- */
+  /* ---------- ACTIVE NAV ON SCROLL ----------
+     Highlights the current section's nav link as you scroll. */
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-links a');
 
   window.addEventListener('scroll', () => {
     let current = '';
     sections.forEach(section => {
-      const sectionTop = section.offsetTop - 100;
+      const sectionTop = section.offsetTop - 100;   // 100px offset for navbar height
       if (scrollY >= sectionTop) {
         current = section.getAttribute('id');
       }
@@ -241,7 +284,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ---------- MIN DATE TODAY ---------- */
+  /* ---------- MIN DATE TODAY ----------
+     Prevents users from booking a date in the past. */
   const dateInput = document.getElementById('date');
   if (dateInput) {
     const today = new Date().toISOString().split('T')[0];

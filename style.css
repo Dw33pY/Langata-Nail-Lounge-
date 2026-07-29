@@ -3,30 +3,32 @@
    Engineered by Dw33pY
    ============================================ */
 
+/* ---------- DESIGN TOKENS (colors, fonts, sizing) ----------
+   Adjust these values to globally change colors, fonts, etc. */
 :root {
-  --plum-deep: #1A0E12;
-  --plum: #54243a;
-  --plum-soft: #8a4762;
-  --blush: #F8EDE6;
-  --cream: #FDF6F1;
-  --black: #050505;
-  --gold: #C9A961;
-  --gold-light: #E2C896;
-  --gold-deep: #A88944;
-  --rose: #D4A5A5;
-  --rose-soft: #E8CFCF;
-  --text: #3D2B33;
-  --muted: #8B6F7A;
-  --line: rgba(84, 36, 58, 0.12);
+  --plum-deep: #1A0E12;    /* Deep plum background tone */
+  --plum: #54243a;         /* Primary plum */
+  --plum-soft: #8a4762;    /* Softer plum */
+  --blush: #F8EDE6;        /* Blush section background */
+  --cream: #FDF6F1;        /* Main page background */
+  --black: #050505;        /* Black backgrounds (preloader, footer, etc.) */
+  --gold: #C9A961;         /* Primary gold (logo accent color) */
+  --gold-light: #E2C896;   /* Lighter gold for hover states */
+  --gold-deep: #A88944;    /* Deeper gold for text accents */
+  --rose: #D4A5A5;         /* Rose accent */
+  --rose-soft: #E8CFCF;    /* Soft rose for icon backgrounds */
+  --text: #3D2B33;         /* Default body text color */
+  --muted: #8B6F7A;        /* Muted/secondary text */
+  --line: rgba(84, 36, 58, 0.12);  /* Hairline border color */
   --white: #ffffff;
 
-  --font-display: 'Cormorant Garamond', serif;
-  --font-body: 'Jost', sans-serif;
+  --font-display: 'Cormorant Garamond', serif;  /* Headings / brand */
+  --font-body: 'Jost', sans-serif;              /* Body text */
 
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --container: 1280px;
-  --radius: 18px;
-  --radius-sm: 10px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);  /* Global easing */
+  --container: 1280px;                       /* Max content width */
+  --radius: 18px;                            /* Large corner radius */
+  --radius-sm: 10px;                         /* Small corner radius */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,7 +36,7 @@
 html { 
   scroll-behavior: smooth; 
   -webkit-font-smoothing: antialiased; 
-  scroll-padding-top: 80px;
+  scroll-padding-top: 80px;   /* Offset anchor scroll for fixed navbar */
   overflow-x: hidden;
 }
 
@@ -54,48 +56,68 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .container { max-width: var(--container); margin: 0 auto; padding: 0 24px; }
 
-/* PRELOADER */
+/* ---------- PRELOADER ----------
+   Full-screen black overlay shown while page loads.
+   Background color can be changed via `background` below. */
 .preloader {
-  position: fixed; inset: 0; background: var(--black);
+  position: fixed; inset: 0; background: var(--black);  /* Preloader background color — change to any color */
   z-index: 10000; display: grid; place-items: center;
   transition: opacity 0.6s var(--ease), visibility 0.6s var(--ease);
 }
 .preloader.hidden { opacity: 0; visibility: hidden; }
-.preloader-logo {
-  display: flex; flex-direction: column; align-items: center; line-height: 1;
-  animation: pulseGlow 1.5s ease-in-out infinite alternate;
-}
-.pl-main {
-  font-family: var(--font-display); font-size: 4rem; font-weight: 500;
-  color: var(--gold); letter-spacing: 1px;
-}
-.pl-sub {
-  font-family: var(--font-body); font-size: 1rem; font-weight: 400;
-  color: var(--gold-light); letter-spacing: 8px; margin-top: 4px;
-  text-transform: uppercase;
-}
-@keyframes pulseGlow {
-  0% { filter: drop-shadow(0 0 10px rgba(201, 169, 97, 0.2)); }
-  100% { filter: drop-shadow(0 0 30px rgba(201, 169, 97, 0.7)); }
+
+/* Preloader logo image (logo.png).
+   Adjust `width` to make the logo bigger/smaller.
+   `height: auto` keeps the aspect ratio. */
+.preloader-logo-img {
+  width: 240px;            /* ← Increased size as requested */
+  height: auto;            /* Keeps aspect ratio — leave as auto */
+  object-fit: contain;     /* Prevents stretching/distortion */
+  animation: preloaderPulse 2s ease-in-out infinite;  /* 2s smooth pulse animation */
 }
 
-/* SCROLL PROGRESS */
+/* Creative pulse animation:
+   Scales the logo from 90% to 105% and back, while intensifying the golden glow. 
+   Adjust the scale values to make the pulsing more or less dramatic.
+   Adjust the rgba last value (0.3 to 0.9) to change glow intensity. */
+@keyframes preloaderPulse {
+  0% { 
+    transform: scale(0.9); 
+    filter: drop-shadow(0 0 15px rgba(201, 169, 97, 0.3)); 
+    opacity: 0.85;
+  }
+  50% { 
+    transform: scale(1.05); 
+    filter: drop-shadow(0 0 45px rgba(201, 169, 97, 0.9)); 
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(0.9); 
+    filter: drop-shadow(0 0 15px rgba(201, 169, 97, 0.3)); 
+    opacity: 0.85;
+  }
+}
+
+/* ---------- SCROLL PROGRESS ----------
+   Thin progress bar at top of page.
+   Change height to make it thicker/thinner. */
 .scroll-progress {
-  position: fixed; top: 0; left: 0; height: 3px;
-  background: linear-gradient(90deg, var(--gold), var(--rose));
+  position: fixed; top: 0; left: 0; height: 3px;   /* ← height = thickness */
+  background: linear-gradient(90deg, var(--gold), var(--rose));  /* Bar color */
   z-index: 9999; width: 0%; transition: width 0.1s linear;
 }
 
-/* CUSTOM CURSOR */
+/* ---------- CUSTOM CURSOR ----------
+   Hidden on touch devices, shown only on devices with precise pointers (mouse). */
 .cursor, .cursor-follower { display: none; }
 @media (hover: hover) and (pointer: fine) {
   .cursor {
-    display: block; position: fixed; width: 8px; height: 8px;
+    display: block; position: fixed; width: 8px; height: 8px;   /* Small dot size */
     background: var(--gold); border-radius: 50%; pointer-events: none;
     z-index: 10000; transform: translate(-50%, -50%); left: 0; top: 0;
   }
   .cursor-follower {
-    display: block; position: fixed; width: 36px; height: 36px;
+    display: block; position: fixed; width: 36px; height: 36px;  /* Outer ring size */
     border: 1px solid var(--gold); border-radius: 50%; pointer-events: none;
     z-index: 10000; transform: translate(-50%, -50%); left: 0; top: 0;
     transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s;
@@ -103,15 +125,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .cursor-follower.hover { width: 56px; height: 56px; background: rgba(201, 169, 97, 0.1); }
 }
 
-/* NAVIGATION */
+/* ---------- NAVIGATION ---------- */
 .navbar {
   position: fixed; top: 0; left: 0; width: 100%; z-index: 2000;
-  padding: 20px 0; background: rgba(0, 0, 0, 0.85);
+  padding: 20px 0; background: rgba(0, 0, 0, 0.85);  /* Navbar bg color & transparency */
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   transition: all 0.4s var(--ease);
 }
 .navbar.scrolled {
-  padding: 10px 0; background: rgba(0, 0, 0, 0.95);
+  padding: 10px 0; background: rgba(0, 0, 0, 0.95);  /* Darker navbar after scroll */
   border-bottom: 1px solid rgba(201, 169, 97, 0.2);
 }
 .nav-inner {
@@ -119,10 +141,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: flex; align-items: center; justify-content: space-between;
 }
 
-/* Logo */
+/* Logo (text version in the navbar) */
 .logo-text { display: flex; flex-direction: column; line-height: 1; }
 .logo-main {
-  font-family: var(--font-display); font-size: 1.8rem; font-weight: 500;
+  font-family: var(--font-display); font-size: 1.8rem; font-weight: 500;  /* Navbar logo font size */
   color: var(--gold); letter-spacing: 1px; transition: font-size 0.4s var(--ease);
 }
 .logo-sub {
@@ -130,10 +152,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   color: #fff; letter-spacing: 4px; text-transform: uppercase; margin-top: 2px;
   transition: font-size 0.4s var(--ease);
 }
-.navbar.scrolled .logo-main { font-size: 1.5rem; }
+.navbar.scrolled .logo-main { font-size: 1.5rem; }   /* Shrinks logo on scroll */
 .navbar.scrolled .logo-sub { font-size: 0.6rem; }
 
-.nav-links { display: flex; align-items: center; gap: 36px; }
+.nav-links { display: flex; align-items: center; gap: 36px; }   /* gap = spacing between links */
 .nav-links a {
   font-size: 0.92rem; font-weight: 400; color: #fff;
   letter-spacing: 0.4px; position: relative; padding: 6px 0;
@@ -141,7 +163,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .nav-links a:not(.btn-nav)::after {
   content: ''; position: absolute; bottom: 0; left: 50%;
-  width: 0; height: 1px; background: var(--gold);
+  width: 0; height: 1px; background: var(--gold);   /* Animated underline color */
   transition: all 0.3s var(--ease);
 }
 .nav-links a:not(.btn-nav):hover::after,
@@ -155,7 +177,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .nav-links a.btn-nav:hover { background: var(--gold-light); transform: translateY(-2px); }
 
-/* MENU TOGGLE */
+/* ---------- MENU TOGGLE (mobile hamburger) ---------- */
 .menu-toggle {
   display: none; width: 44px; height: 44px; position: relative; z-index: 2100;
 }
@@ -171,9 +193,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .menu-toggle.active span:nth-child(2) { opacity: 0; }
 .menu-toggle.active span:nth-child(3) { top: 21px; transform: translateX(-50%) rotate(-45deg); background: var(--gold); }
 
-/* MOBILE MENU */
+/* ---------- MOBILE MENU OVERLAY ---------- */
 .mobile-menu {
-  position: fixed; inset: 0; background: var(--black);
+  position: fixed; inset: 0; background: var(--black);   /* Mobile menu background */
   z-index: 1500; display: flex; align-items: center; justify-content: center;
   opacity: 0; visibility: hidden; transition: all 0.5s var(--ease);
 }
@@ -212,14 +234,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .mobile-social a:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
 
-/* HERO */
+/* ---------- HERO ---------- */
 .hero {
   position: relative; min-height: 100vh; display: flex; align-items: center;
   justify-content: center; text-align: center; color: #fff; overflow: hidden;
 }
 .hero-bg {
   position: absolute; inset: 0; background-size: cover; background-position: center;
-  transform: scale(1.05); animation: heroZoom 20s ease-in-out infinite alternate;
+  transform: scale(1.05); animation: heroZoom 20s ease-in-out infinite alternate;  /* Slow zoom on hero bg */
 }
 @keyframes heroZoom { to { transform: scale(1.15); } }
 .hero-overlay {
@@ -234,7 +256,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .hero-tag .line { width: 40px; height: 1px; background: var(--gold); }
 .hero-title {
-  font-family: var(--font-display); font-size: clamp(3rem, 8vw, 6.5rem);
+  font-family: var(--font-display); font-size: clamp(3rem, 8vw, 6.5rem);  /* Responsive hero title size */
   line-height: 1; font-weight: 400; letter-spacing: -1px; margin-bottom: 28px;
 }
 .hero-title span { display: block; }
@@ -262,7 +284,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 @keyframes scrollDown { to { top: 60px; } }
 
-/* BUTTONS */
+/* ---------- BUTTONS ---------- */
 .btn {
   display: inline-flex; align-items: center; gap: 10px;
   padding: 14px 32px; border-radius: 30px; font-weight: 500;
@@ -277,21 +299,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .btn-ghost:hover { background: #fff; color: var(--black); border-color: #fff; }
 .btn-full { width: 100%; justify-content: center; }
 
-/* MARQUEE */
+/* ---------- MARQUEE ---------- */
 .marquee {
   background: var(--black); color: var(--cream);
   padding: 18px 0; overflow: hidden; white-space: nowrap;
 }
 .marquee-track {
   display: inline-flex; align-items: center; gap: 32px;
-  animation: marquee 30s linear infinite;
+  animation: marquee 30s linear infinite;   /* 30s = scroll speed — lower is faster */
   font-family: var(--font-display); font-size: 1.5rem; font-style: italic;
 }
 .marquee-track i { color: var(--gold); font-size: 0.7rem; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
-/* SECTIONS */
-.section { padding: 120px 0; position: relative; }
+/* ---------- SECTIONS (shared) ---------- */
+.section { padding: 120px 0; position: relative; }   /* 120px = vertical section padding */
 .section-tag {
   display: inline-flex; align-items: center; gap: 12px;
   font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase;
@@ -308,10 +330,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .section-head { text-align: center; margin-bottom: 70px; }
 .section-sub { max-width: 540px; margin: 20px auto 0; color: var(--muted); font-size: 1.02rem; }
 
-/* ABOUT */
+/* ---------- ABOUT ---------- */
 .about .split { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
 .about-visual { position: relative; }
-.img-main { width: 100%; height: 540px; object-fit: cover; border-radius: var(--radius); }
+.img-main { width: 100%; height: 540px; object-fit: cover; border-radius: var(--radius); }   /* height = main image height */
 .img-float {
   position: absolute; bottom: 20px; right: 20px;
   width: 200px; height: 240px; object-fit: cover;
@@ -346,7 +368,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .link-arrow:hover { color: var(--gold-deep); border-color: var(--gold-deep); gap: 16px; }
 
-/* SERVICES LIST */
+/* ---------- SERVICES LIST ---------- */
 .services-list-section { background: var(--blush); padding: 80px 0 120px; }
 .filter-bar {
   position: sticky; top: 0; z-index: 50;
@@ -381,10 +403,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .service-item-price { font-family: var(--font-display); font-size: 1.3rem; font-weight: 500; color: var(--gold-deep); white-space: nowrap; }
 .service-category.hidden { display: none; }
 
-/* GALLERY (Pinterest Masonry) */
+/* ---------- GALLERY (Pinterest Masonry on Desktop) ---------- */
 .gallery { background: var(--cream); }
+
+/* Gallery Navigation Buttons - Hidden on desktop, shown on mobile */
+.gallery-nav { display: none; }
+
 .masonry-grid { 
-  column-count: 3; column-gap: 24px;
+  column-count: 3; column-gap: 24px;   /* 3 columns desktop */
   max-width: 1400px; margin: 0 auto; padding: 0 24px; 
 }
 .masonry-item { 
@@ -405,7 +431,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .gallery-hover i { color: #fff; font-size: 1.6rem; transform: scale(0.5); transition: transform 0.4s var(--ease); }
 .masonry-item:hover .gallery-hover i { transform: scale(1); }
 
-/* LIGHTBOX */
+/* ---------- LIGHTBOX ---------- */
 .lightbox {
   position: fixed; inset: 0; background: rgba(0,0,0,0.95);
   z-index: 5000; display: flex; align-items: center; justify-content: center;
@@ -432,7 +458,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   color: rgba(255,255,255,0.6); font-family: var(--font-body); letter-spacing: 2px; font-size: 0.9rem; 
 }
 
-/* VIDEO SECTION */
+/* ---------- VIDEO SECTION ---------- */
 .video-section { background: var(--black); color: #fff; }
 .video-section .section-title { color: #fff; }
 .video-section .section-title em { color: var(--gold-light); }
@@ -444,7 +470,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .video-wrapper video { width: 100%; display: block; }
 
-/* BOOKING */
+/* ---------- BOOKING ---------- */
 .booking { background: var(--blush); }
 .booking-card {
   background: var(--white); border-radius: var(--radius); overflow: hidden;
@@ -480,13 +506,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .form-note { margin-top: 12px; font-size: 0.88rem; text-align: center; min-height: 20px; }
 .form-note.success { color: #2d7a4a; }
 
-/* FOOTER */
+/* ---------- FOOTER ---------- */
 .footer { background: var(--black); color: #fff; }
 .footer-top { padding: 80px 0 60px; }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 50px; }
-.footer-logo-text { display: flex; flex-direction: column; line-height: 1; margin-bottom: 20px; }
-.fl-main { font-family: var(--font-display); font-size: 2rem; font-weight: 500; color: var(--gold); }
-.fl-sub { font-family: var(--font-body); font-size: 0.8rem; font-weight: 500; color: #fff; letter-spacing: 4px; text-transform: uppercase; margin-top: 4px; }
+
+/* Footer logo image (logo.png).
+   Adjust `width` to make the footer logo bigger/smaller.
+   `margin-bottom` controls spacing below the logo. */
+.footer-logo-img {
+  width: 130px;            /* ← Change this value to resize footer logo */
+  height: auto;            /* Keeps aspect ratio — leave as auto */
+  object-fit: contain;     /* Prevents stretching/distortion */
+  margin-bottom: 20px;     /* Space between logo and description paragraph */
+}
+
 .footer-brand p { color: rgba(255,255,255,0.65); font-size: 0.92rem; margin-bottom: 24px; max-width: 320px; }
 .footer-social { display: flex; gap: 12px; }
 .footer-social a {
@@ -507,9 +541,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .credit a { color: var(--gold-light); font-weight: 500; letter-spacing: 0.5px; transition: color 0.3s; }
 .credit a:hover { color: var(--gold); }
 
-/* FLOATING BUTTONS */
+/* ---------- FLOATING BUTTONS ---------- */
 .whatsapp-btn {
-  position: fixed; bottom: 28px; right: 28px; width: 56px; height: 56px;
+  position: fixed; bottom: 28px; right: 28px; width: 56px; height: 56px;   /* WhatsApp button size */
   background: #25d366; color: white; border-radius: 50%; display: grid;
   place-items: center; font-size: 1.6rem; z-index: 900;
   box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4); transition: transform 0.3s var(--ease);
@@ -530,7 +564,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 #backToTop.show { opacity: 1; visibility: visible; transform: translateY(0); }
 #backToTop:hover { background: var(--gold); color: var(--black); transform: translateY(-4px); }
 
-/* REVEAL ANIMATIONS */
+/* ---------- REVEAL ANIMATIONS ----------
+   Elements with .reveal-up/.reveal-left/.reveal-right fade in on scroll. */
 .reveal-up, .reveal-left, .reveal-right {
   opacity: 0; transition: opacity 1s var(--ease), transform 1s var(--ease);
   transition-delay: var(--d, 0s);
@@ -540,7 +575,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .reveal-right { transform: translateX(40px); }
 .reveal-up.active, .reveal-left.active, .reveal-right.active { opacity: 1; transform: translate(0, 0); }
 
-/* RESPONSIVE */
+/* ---------- RESPONSIVE BREAKPOINTS ---------- */
 @media (max-width: 1024px) {
   .about .split { grid-template-columns: 1fr; gap: 60px; }
   .booking-card { grid-template-columns: 1fr; }
@@ -549,11 +584,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .masonry-grid { column-count: 2; }
   .cat-items { grid-template-columns: 1fr; }
 }
+
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .menu-toggle { display: block; }
   .section { padding: 80px 0; }
-  .masonry-grid { column-count: 1; }
   .booking-left, .booking-right { padding: 32px 24px; }
   .form-row { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
@@ -570,4 +605,52 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .lightbox-prev { left: 10px; }
   .lightbox-next { right: 10px; }
   .lightbox-close { top: 15px; right: 15px; }
+
+  /* --- Mobile Gallery Carousel Layout --- */
+  /* Shows the navigation buttons defined earlier */
+  .gallery-nav {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+  .gallery-nav button {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    background: transparent;
+    display: grid; place-items: center;
+    transition: all 0.3s var(--ease);
+    font-size: 1rem;
+  }
+  .gallery-nav button:hover {
+    background: var(--gold);
+    color: var(--black);
+  }
+
+  /* Turn Masonry into a Swipeable Carousel on mobile */
+  .masonry-grid {
+    display: flex;             /* Use flexbox for horizontal layout */
+    overflow-x: auto;          /* Enable horizontal scrolling */
+    scroll-snap-type: x mandatory; /* Snap to images when swiping */
+    column-count: unset;       /* Disable masonry columns */
+    gap: 16px;
+    padding: 0 24px 30px;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scrollbar-width: none;     /* Hide scrollbar Firefox */
+  }
+  .masonry-grid::-webkit-scrollbar {
+    display: none;             /* Hide scrollbar Chrome/Safari */
+  }
+  .masonry-item {
+    flex: 0 0 80%;             /* Each image takes 80% of screen width */
+    scroll-snap-align: center; /* Center the snapped image */
+    margin-bottom: 0;
+  }
+  .masonry-item img {
+    height: 450px;             /* Fixed height for clean uniform carousel look */
+    width: 100%;
+    object-fit: cover;         /* Crop image to fit the fixed height nicely */
+  }
 }

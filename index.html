@@ -56,11 +56,12 @@
 <body>
 
 <!-- PRELOADER -->
+<!-- Full-screen black overlay shown while the page loads.
+     Logo image (logo.png) is displayed centered.
+     To swap the logo, change the src below.
+     To resize, edit .preloader-logo-img width in style.css -->
 <div class="preloader" id="preloader">
-  <div class="preloader-logo">
-    <span class="pl-main">Langata</span>
-    <span class="pl-sub">Nail Lounge</span>
-  </div>
+  <img src="logo.png" alt="Langata Nail Lounge Logo" class="preloader-logo-img">
 </div>
 
 <!-- Scroll Progress -->
@@ -363,6 +364,12 @@
       <h2 class="section-title centered">The <em>Artistry</em></h2>
       <p class="section-sub">A glimpse into the meticulous details created at our lounge. Click to expand.</p>
     </div>
+
+    <!-- Gallery Navigation Buttons (Visible only on mobile for the carousel) -->
+    <div class="gallery-nav">
+      <button id="galleryPrev" aria-label="Previous Gallery Item"><i class="fas fa-chevron-left"></i></button>
+      <button id="galleryNext" aria-label="Next Gallery Item"><i class="fas fa-chevron-right"></i></button>
+    </div>
   </div>
 
   <div class="masonry-grid">
@@ -517,11 +524,12 @@
 <footer class="footer">
   <div class="footer-top">
     <div class="container footer-grid">
+      <!-- Footer brand column.
+           The logo image (logo.png) replaces the previous text logo.
+           To swap logo, change src below.
+           To resize, edit .footer-logo-img width in style.css -->
       <div class="footer-brand">
-        <div class="footer-logo-text">
-          <span class="fl-main">Langata</span>
-          <span class="fl-sub">Nail Lounge</span>
-        </div>
+        <img src="logo.png" alt="Langata Nail Lounge Logo" class="footer-logo-img">
         <p>Nairobi's destination for luxury nail care, custom floral designs, and a relaxing experience worth returning to.</p>
         <div class="footer-social">
           <a href="https://wa.me/254720158167" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>

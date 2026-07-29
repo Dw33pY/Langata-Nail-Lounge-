@@ -3,116 +3,578 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Langata Nail Lounge</title>
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- SEO -->
+  <title>Langata Nail Lounge | Luxury Nail Artistry in Nairobi</title>
+  <meta name="description" content="Langata Nail Lounge — Nairobi's premier destination for luxury nail care, floral nail art, acrylic extensions, and lash artistry. Book your appointment today." />
+  <meta name="keywords" content="nail salon nairobi, langata nail lounge, manicure, pedicure, acrylic nails, gel nails, nail art, eyelash extensions nairobi" />
+  <meta name="author" content="Langata Nail Lounge" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Langata Nail Lounge | Luxury Nail Artistry" />
+  <meta property="og:description" content="Nairobi's premier destination for luxury nail care and custom floral nail artistry." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://langatanainlounge.co.ke" />
+  <meta property="og:image" content="https://z-cdn-media.chatglm.cn/files/f2bec55d-7f18-45e7-9c76-ff40153f8004.jpg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Langata Nail Lounge | Luxury Nail Artistry" />
+  <meta name="twitter:description" content="Nairobi's premier destination for luxury nail care." />
+
+  <link rel="canonical" href="https://langatanainlounge.co.ke" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BeautySalon",
+    "name": "Langata Nail Lounge",
+    "image": "https://z-cdn-media.chatglm.cn/files/f2bec55d-7f18-45e7-9c76-ff40153f8004.jpg",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Langata Road",
+      "addressLocality": "Nairobi",
+      "addressCountry": "KE"
+    },
+    "telephone": "+254720158167",
+    "openingHours": "Mo-Su 08:00-21:00",
+    "priceRange": "$$"
+  }
+  </script>
 
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+  <div class="preloader-logo">
+    <span class="pl-main">Langata</span>
+    <span class="pl-sub">Nail Lounge</span>
+  </div>
+</div>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
 <!-- NAV -->
-<nav class="navbar">
-  <div class="logo">Langata Nail Lounge</div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="logo">
+      <span class="logo-text">
+        <span class="logo-main">Langata</span>
+        <span class="logo-sub">Nail Lounge</span>
+      </span>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#video">Video</a></li>
+      <li><a href="#booking" class="btn-nav">Book Now</a></li>
+    </ul>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Close Menu">
+    <i class="fas fa-times"></i>
+  </button>
+  <div class="mobile-menu-inner">
+    <a href="#home" class="mobile-link" data-num="01">Home</a>
+    <a href="#about" class="mobile-link" data-num="02">About</a>
+    <a href="#services" class="mobile-link" data-num="03">Services</a>
+    <a href="#gallery" class="mobile-link" data-num="04">Gallery</a>
+    <a href="#video" class="mobile-link" data-num="05">Video</a>
+    <a href="#booking" class="btn mobile-cta">Book Appointment</a>
+    <div class="mobile-social">
+      <a href="https://wa.me/254720158167" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+    </div>
+  </div>
+</div>
+
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="home">
+  <div class="hero-bg" style="background-image: url('https://images.pexels.com/photos/3997381/pexels-photo-3997381.jpeg?auto=compress&cs=tinysrgb&w=1920');"></div>
+  <div class="hero-overlay"></div>
+
   <div class="hero-content">
-    <h1>Luxury Nails. Perfect Finish.</h1>
-    <p>Your beauty, perfected in Langata 💅</p>
-    <a href="#contact" class="btn">Book Appointment</a>
+    <div class="hero-tag reveal-up">
+      <span class="line"></span>
+      <span>Nairobi · Est. 2026</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="reveal-up" style="--d:0.1s">Where Petals,</span>
+      <span class="reveal-up" style="--d:0.25s">Pearls & <em>Polish</em> Meet.</span>
+    </h1>
+    <p class="hero-sub reveal-up" style="--d:0.4s">Your beauty, perfected in Langata — where delicate floral artistry meets flawless, long-lasting elegance.</p>
+    <div class="hero-cta reveal-up" style="--d:0.55s">
+      <a href="#booking" class="btn btn-primary">
+        <span>Book Appointment</span>
+        <i class="fas fa-arrow-right"></i>
+      </a>
+      <a href="#services" class="btn btn-ghost">View Services</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
   </div>
 </section>
+
+<!-- MARQUEE BAR -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Floral Art</span><i>✦</i>
+    <span>Acrylics</span><i>✦</i>
+    <span>Pearls</span><i>✦</i>
+    <span>Gel Polish</span><i>✦</i>
+    <span>Gold Leaf</span><i>✦</i>
+    <span>Lash Extensions</span><i>✦</i>
+    <span>French Tips</span><i>✦</i>
+    <span>Stilettos</span><i>✦</i>
+    <span>Floral Art</span><i>✦</i>
+    <span>Acrylics</span><i>✦</i>
+    <span>Pearls</span><i>✦</i>
+    <span>Gel Polish</span><i>✦</i>
+    <span>Gold Leaf</span><i>✦</i>
+    <span>Lash Extensions</span><i>✦</i>
+  </div>
+</div>
 
 <!-- ABOUT -->
-<section id="about" class="section reveal">
-  <h2>About Us</h2>
-  <p>
-    Langata Nail Lounge is a modern nail salon located along Langata Road, Nairobi.
-    We specialize in elegant nail care, creative designs, and premium customer experience
-    in a relaxing and stylish environment.
-  </p>
-</section>
-
-<!-- SERVICES -->
-<section id="services" class="section alt reveal">
-  <h2>Our Services</h2>
-
-  <div class="services-grid">
-
-    <div class="service-card">
-      <div class="service-img">
-        <img src="https://images.pexels.com/photos/6135675/pexels-photo-6135675.jpeg" alt="Manicure Service">
+<section id="about" class="section about">
+  <div class="container split">
+    <div class="about-visual reveal-left">
+      <div class="about-img-stack">
+        <img src="https://z-cdn-media.chatglm.cn/files/282fcec3-f326-42df-ab98-fa493d793dc6.jpg?auth_key=1885325604-115d726de42d4d4d8a2b2e657350fdd5-0-c036e23a6d61dc2a14af566d76b0ab3f" alt="Close up of floral nail art with pearls" class="img-main" loading="lazy">
+        <img src="https://z-cdn-media.chatglm.cn/files/b6d90682-46a0-4cfa-8abb-a1ef5e894e32.jpg?auth_key=1885325604-3adb527cc4df4045b86119687163f555-0-64c2cf950adf47cac132f9d1872f2606" alt="Hand displaying elegant pink and gold nails" class="img-float" loading="lazy">
       </div>
-      <i class="fas fa-hand-sparkles"></i>
-      <h3>Manicure</h3>
-      <p>Clean, shape & polish for elegant hands.</p>
+      <div class="about-badge">
+        <span class="badge-num">100%</span>
+        <span class="badge-text">Custom Artistry</span>
+      </div>
     </div>
 
-    <div class="service-card">
-      <div class="service-img">
-        <img src="https://images.pexels.com/photos/34930117/pexels-photo-34930117.jpeg" alt="Pedicure Service">
+    <div class="about-content reveal-right">
+      <div class="section-tag">
+        <span class="line"></span>
+        <span>About Us</span>
       </div>
-      <i class="fas fa-spa"></i>
-      <h3>Pedicure</h3>
-      <p>Relaxing foot care with premium products.</p>
-    </div>
+      <h2 class="section-title">The Art of <em>Elegance</em></h2>
+      <p class="lead">Langata Nail Lounge is a modern nail sanctuary located along Langata Road, Nairobi.</p>
+      <p>We specialize in delicate, hand-crafted nail artistry — from floral motifs and pearl drops to durable acrylics and gels. Wrapped in a relaxing, stylish environment, every detail is designed to make you feel cared for from the moment you walk in.</p>
 
-    <div class="service-card">
-      <div class="service-img">
-        <img src="https://images.pexels.com/photos/7755681/pexels-photo-7755681.jpeg">
+      <div class="about-features">
+        <div class="feature">
+          <i class="fas fa-spa"></i>
+          <div>
+            <h4>Hygienic & Safe</h4>
+            <p>Sterilized tools, single-use disposables.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <i class="fas fa-gem"></i>
+          <div>
+            <h4>Premium Products</h4>
+            <p>Only top-tier polishes, gels & embellishments.</p>
+          </div>
+        </div>
       </div>
-      <i class="fas fa-gem"></i>
-      <h3>Acrylic & Gel</h3>
-      <p>Durable, stylish nail extensions.</p>
-    </div>
 
-    <div class="service-card">
-      <div class="service-img">
-        <img src="https://images.pexels.com/photos/15491630/pexels-photo-15491630.jpeg" alt="Nail Art">
-      </div>
-      <i class="fas fa-paint-brush"></i>
-      <h3>Nail Art</h3>
-      <p>Custom designs made just for you.</p>
+      <a href="#booking" class="link-arrow">
+        <span>Book your visit</span>
+        <i class="fas fa-arrow-right"></i>
+      </a>
     </div>
-
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact" class="section reveal">
-  <h2>Contact Us</h2>
+<!-- SERVICES LIST -->
+<section id="services" class="section services-list-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-tag centered">
+        <span class="line"></span>
+        <span>Our Menu</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="section-title centered">Signature <em>Treatments</em></h2>
+      <p class="section-sub">From classic manicures to sculpted floral stilettos — every treatment is crafted with intention.</p>
+    </div>
+  </div>
 
-  <div class="contact-box">
-    <p><i class="fas fa-location-dot"></i> Langata Road, Nairobi</p>
-    <p><i class="fas fa-phone"></i> 0720 158 167</p>
-    <p><i class="fas fa-clock"></i> Mon – Sun | 8:00 AM – 9:00 PM</p>
+  <!-- FILTER BAR -->
+  <div class="filter-bar" id="filterBar">
+    <div class="container">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="manicures">Manicures</button>
+      <button class="filter-btn" data-filter="extensions">Extensions</button>
+      <button class="filter-btn" data-filter="art">Nail Art</button>
+      <button class="filter-btn" data-filter="care">Nail Care</button>
+      <button class="filter-btn" data-filter="pedicures">Pedicures</button>
+      <button class="filter-btn" data-filter="beauty">Beauty Add-ons</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Manicures -->
+    <div class="service-category reveal-up" data-cat="manicures">
+      <div class="cat-head">
+        <span class="cat-num">01</span>
+        <h2>Manicures</h2>
+        <p>Hand care, refined.</p>
+      </div>
+      <div class="cat-items">
+        <div class="service-item">
+          <div class="service-item-info"><h3>Classic Manicure</h3><p>Nail shaping, cuticle care, hand massage & polish.</p></div>
+          <div class="service-item-price">KSh 1,500</div>
+        </div>
+        <div class="service-item">
+          <div class="service-item-info"><h3>Gel Manicure</h3><p>Long-lasting, high-shine gel polish that lasts weeks.</p></div>
+          <div class="service-item-price">KSh 2,200</div>
+        </div>
+        <div class="service-item">
+          <div class="service-item-info"><h3>French Manicure</h3><p>Timeless white tips with a clean, polished finish.</p></div>
+          <div class="service-item-price">KSh 1,800</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Extensions -->
+    <div class="service-category reveal-up" data-cat="extensions">
+      <div class="cat-head">
+        <span class="cat-num">02</span>
+        <h2>Nail Extensions</h2>
+        <p>Length, shape & drama.</p>
+      </div>
+      <div class="cat-items">
+        <div class="service-item">
+          <div class="service-item-info"><h3>Acrylic Nails</h3><p>Strong, durable extensions sculpted to your desired shape.</p></div>
+          <div class="service-item-price">KSh 2,500</div>
+        </div>
+        <div class="service-item">
+          <div class="service-item-info"><h3>Dip Powder</h3><p>Lightweight, chip-resistant color bonded without UV light.</p></div>
+          <div class="service-item-price">KSh 2,300</div>
+        </div>
+        <div class="service-item">
+          <div class="service-item-info"><h3>Stiletto Nails</h3><p>Bold, pointed extensions for the fearless.</p></div>
+          <div class="service-item-price">KSh 3,000</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nail Art -->
+    <div class="service-category reveal-up" data-cat="art">
+      <div class="cat-head">
+        <span class="cat-num">03</span>
+        <h2>Nail Art & Design</h2>
+        <p>Where creativity lives.</p>
+      </div>
+      <div class="cat-items">
+        <div class="service-item">
+          <div class="service-item-info"><h3>Floral & Pearl Art</h3><p>Bespoke hand-painted florals with 3D pearl & gold leaf detailing.</p></div>
+          <div class="service-item-price">from KSh 1,200</div>
+        </div>
+        <div class="service-item">
+          <div class="service-item-info"><h3>Nail Decals</h3><p>Foil, stickers & precision decals for intricate detailing.</p></div>
+          <div class="service-item-price">from KSh 500</div>
+        </div>
+        <div class="service-item">
+          <div class="service-item-info"><h3>Freehand Painting</h3><p>Abstract, minimalist, or anything you imagine.</p></div>
+          <div class="service-item-price">from KSh 700</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pedicures -->
+    <div class="service-category reveal-up" data-cat="pedicures">
+      <div class="cat-head">
+        <span class="cat-num">04</span>
+        <h2>Pedicures</h2>
+        <p>Happy feet, happy you.</p>
+      </div>
+      <div class="cat-items">
+        <div class="service-item">
+          <div class="service-item-info"><h3>Classic Pedicure</h3><p>Soak, scrub, shape & polish for refreshed feet.</p></div>
+          <div class="service-item-price">KSh 2,000</div>
+        </div>
+        <div class="service-item">
+          <div class="service-item-info"><h3>Waterless Pedicure</h3><p>Hygienic, eco-conscious pedicure without soaking.</p></div>
+          <div class="service-item-price">KSh 2,200</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Beauty Add-ons -->
+    <div class="service-category reveal-up" data-cat="beauty">
+      <div class="cat-head">
+        <span class="cat-num">05</span>
+        <h2>Beauty Add-ons</h2>
+        <p>The finishing touches.</p>
+      </div>
+      <div class="cat-items">
+        <div class="service-item">
+          <div class="service-item-info"><h3>Eyelash Extensions</h3><p>Natural or dramatic lash sets applied by our lash artist.</p></div>
+          <div class="service-item-price">from KSh 2,500</div>
+        </div>
+        <div class="service-item">
+          <div class="service-item-info"><h3>Hand & Foot Massage</h3><p>Combined upper-and-lower relaxation treatment.</p></div>
+          <div class="service-item-price">KSh 2,000</div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<footer>
-  <p>© 2026 Langata Nail Lounge. All rights reserved.</p>
-  <p class="credit">Made by <span>Dw33pY</span></p>
+<!-- GALLERY -->
+<section id="gallery" class="section gallery">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-tag centered">
+        <span class="line"></span>
+        <span>Gallery</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="section-title centered">The <em>Artistry</em></h2>
+      <p class="section-sub">A glimpse into the meticulous details created at our lounge. Click to expand.</p>
+    </div>
+  </div>
+
+  <div class="masonry-grid">
+    <div class="masonry-item reveal-up">
+      <img src="https://z-cdn-media.chatglm.cn/files/b6d90682-46a0-4cfa-8abb-a1ef5e894e32.jpg?auth_key=1885325604-3adb527cc4df4045b86119687163f555-0-64c2cf950adf47cac132f9d1872f2606" alt="Pink and gold floral nails" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="masonry-item reveal-up" style="--d:0.1s">
+      <img src="https://z-cdn-media.chatglm.cn/files/282fcec3-f326-42df-ab98-fa493d793dc6.jpg?auth_key=1885325604-115d726de42d4d4d8a2b2e657350fdd5-0-c036e23a6d61dc2a14af566d76b0ab3f" alt="Pearl and floral nail close up" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="masonry-item reveal-up" style="--d:0.2s">
+      <img src="https://z-cdn-media.chatglm.cn/files/f2bec55d-7f18-45e7-9c76-ff40153f8004.jpg?auth_key=1885325604-9452c6bed5714a03aebb0dd1f637c404-0-eed5a5ee129bc49d4a552e98eae243ac" alt="Two hands with elegant manicures" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="masonry-item reveal-up" style="--d:0.3s">
+      <img src="https://images.pexels.com/photos/704815/pexels-photo-704815.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Manicure detail" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="masonry-item reveal-up" style="--d:0.4s">
+      <img src="https://images.pexels.com/photos/887352/pexels-photo-887352.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Luxury nails" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="masonry-item reveal-up" style="--d:0.5s">
+      <img src="https://images.pexels.com/photos/4061243/pexels-photo-4061243.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Pedicure" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="masonry-item reveal-up" style="--d:0.6s">
+      <img src="https://images.pexels.com/photos/3997989/pexels-photo-3997989.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Nail technician at work" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close"><i class="fas fa-times"></i></button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+  <div class="lightbox-content">
+    <img src="" id="lightboxImg" alt="Expanded view">
+  </div>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<!-- VIDEO SECTION -->
+<section id="video" class="section video-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-tag centered">
+        <span class="line"></span>
+        <span>Experience</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="section-title centered">A Glimpse <em>Inside</em></h2>
+      <p class="section-sub">Take a visual journey through our lounge and the artistry we create.</p>
+    </div>
+
+    <div class="video-wrapper reveal-up">
+      <video controls poster="https://images.pexels.com/photos/3997989/pexels-photo-3997989.jpeg?auto=compress&cs=tinysrgb&w=1920">
+        <source src="your-video-file.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking" class="section booking">
+  <div class="container">
+    <div class="booking-card">
+      <div class="booking-left">
+        <div class="section-tag">
+          <span class="line"></span>
+          <span>Book Now</span>
+        </div>
+        <h2 class="section-title">Ready to be <em>pampered?</em></h2>
+        <p>Reserve your spot at Langata Nail Lounge. Walk-ins welcome, but appointments get priority.</p>
+
+        <div class="booking-info">
+          <div class="info-item">
+            <i class="fas fa-location-dot"></i>
+            <div>
+              <span class="info-label">Location</span>
+              <span class="info-val">Langata Road, Nairobi</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <div>
+              <span class="info-label">Call / WhatsApp</span>
+              <span class="info-val">0720 158 167</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <span class="info-label">Hours</span>
+              <span class="info-val">Mon – Sun · 8AM – 9PM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-right">
+        <form class="booking-form" id="bookingForm">
+          <h3>Request Appointment</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" required placeholder="Jane Doe">
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" required placeholder="07XX XXX XXX">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="service">Service</label>
+              <select id="service" name="service" required>
+                <option value="">Select service</option>
+                <option>Floral & Pearl Art</option>
+                <option>Acrylic Nails</option>
+                <option>Gel Manicure</option>
+                <option>Classic Pedicure</option>
+                <option>Eyelash Extensions</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="date">Preferred Date</label>
+              <input type="date" id="date" name="date" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="notes">Notes (optional)</label>
+            <textarea id="notes" name="notes" rows="3" placeholder="Tell us about your desired look..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">
+            <span>Send Request</span>
+            <i class="fas fa-paper-plane"></i>
+          </button>
+          <p class="form-note" id="formNote"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo-text">
+          <span class="fl-main">Langata</span>
+          <span class="fl-sub">Nail Lounge</span>
+        </div>
+        <p>Nairobi's destination for luxury nail care, custom floral designs, and a relaxing experience worth returning to.</p>
+        <div class="footer-social">
+          <a href="https://wa.me/254720158167" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Manicures</a></li>
+          <li><a href="#services">Acrylics</a></li>
+          <li><a href="#services">Nail Art</a></li>
+          <li><a href="#services">Lash Extensions</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Visit Us</h4>
+        <ul class="footer-contact">
+          <li><i class="fas fa-location-dot"></i> Langata Road, Nairobi</li>
+          <li><i class="fas fa-phone"></i> <a href="tel:+254720158167">0720 158 167</a></li>
+          <li><i class="fas fa-clock"></i> Mon – Sun · 8AM – 9PM</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p>© 2026 Langata Nail Lounge. All rights reserved.</p>
+      <p class="credit">Engineered for a flawless finish — <a href="https://dw33py.netlify.app" target="_blank" rel="noopener">Dw33pY</a></p>
+    </div>
+  </div>
 </footer>
 
 <!-- FLOATING BUTTONS -->
-<a href="https://wa.me/254720158167" class="whatsapp-btn" target="_blank">
+<a href="https://wa.me/254720158167" class="whatsapp-btn" target="_blank" aria-label="WhatsApp">
   <i class="fab fa-whatsapp"></i>
+  <span class="wa-pulse"></span>
 </a>
-
-<button id="backToTop"><i class="fas fa-arrow-up"></i></button>
+<button id="backToTop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
 <script src="main.js"></script>
 </body>
-  </html>
+</html>

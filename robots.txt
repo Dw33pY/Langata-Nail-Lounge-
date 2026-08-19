@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Disallow common system folders if you had them
+Disallow: /api/
+
+# Point to your sitemap
+Sitemap: https://langatanainlounge.co.ke/sitemap.xml

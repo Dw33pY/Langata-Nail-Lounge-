@@ -681,3 +681,40 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     object-fit: cover;         
   }
 }
+
+/* ============================================
+   DEDICATED GALLERY PAGE - VIDEO GALLERY
+   ============================================ */
+
+/* Video Gallery Grid Layout */
+.video-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns on desktop */
+  gap: 24px;
+  max-width: 1000px; /* Keeps videos from getting too massive */
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Individual Video Item */
+.video-gallery-item {
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--black);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.video-gallery-item video {
+  width: 100%;
+  display: block;
+  height: 100%;
+  object-fit: cover; /* Ensures videos fill the box nicely */
+}
+
+/* Mobile responsiveness for Video Gallery */
+@media (max-width: 768px) {
+  .video-gallery-grid {
+    grid-template-columns: 1fr; /* 1 column on mobile */
+  }
+}

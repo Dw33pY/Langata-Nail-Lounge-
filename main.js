@@ -64,10 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
   };
 
-  menuToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    toggleMenu();
-  });
+  if (menuToggle) {
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+  }
   
   if (mobileClose) {
     mobileClose.addEventListener('click', (e) => {
@@ -79,23 +81,27 @@ document.addEventListener('DOMContentLoaded', () => {
   mobileLinks.forEach(link => link.addEventListener('click', () => toggleMenu(false)));
   
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && mobileMenu.classList.contains('active')) toggleMenu(false);
+    if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) toggleMenu(false);
   });
 
-  mobileMenu.addEventListener('click', (e) => {
-    if (e.target === mobileMenu) {
-      toggleMenu(false);
-    }
-  });
+  if (mobileMenu) {
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) {
+        toggleMenu(false);
+      }
+    });
+  }
 
   window.addEventListener('resize', () => {
-    if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+    if (window.innerWidth > 768 && mobileMenu && mobileMenu.classList.contains('active')) {
       toggleMenu(false);
     }
   });
 
   /* ---------- BACK TO TOP ---------- */
-  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  if (backToTop) {
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  }
 
   /* ---------- SERVICES FILTER ---------- */
   const filterBtns = document.querySelectorAll('.filter-btn');
@@ -211,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------- LIGHTBOX FUNCTIONALITY (Dynamic for Infinite Scroll) ---------- */
+  /* ---------- LIGHTBOX FUNCTIONALITY (Dynamic) ---------- */
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
@@ -222,12 +228,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentImageIndex = 0;
   let imageSources = []; 
 
-  // Function to update lightbox sources (called on load and after new images load)
   function updateLightboxSources() {
     const galleryItems = document.querySelectorAll('.masonry-item');
     imageSources = Array.from(galleryItems).map(item => item.querySelector('img').src);
     
-    // Attach click listeners to any items that don't have them yet
     galleryItems.forEach((item, index) => {
       if (!item.dataset.lightboxListener) {
         item.addEventListener('click', () => openLightbox(index));
@@ -238,7 +242,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const openLightbox = (index) => {
     currentImageIndex = index;
-    // Ensure index stays in bounds
     if (currentImageIndex >= imageSources.length) currentImageIndex = 0;
     if (currentImageIndex < 0) currentImageIndex = imageSources.length - 1;
     
@@ -261,88 +264,107 @@ document.addEventListener('DOMContentLoaded', () => {
   if (lightboxNext) lightboxNext.addEventListener('click', showNext);
 
   let touchStartX = 0;
-  lightbox.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-  }, false);
+  if (lightbox) {
+    lightbox.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, false);
 
-  lightbox.addEventListener('touchend', (e) => {
-    const touchEndX = e.changedTouches[0].screenX;
-    const diff = touchStartX - touchEndX;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) showNext();
-      else showPrev();
-    }
-  }, false);
+    lightbox.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) showNext();
+        else showPrev();
+      }
+    }, false);
+  }
 
-  // Initial population of lightbox sources
-  updateLightboxSources();
-
-  /* ---------- GALLERY PAGE INFINITE SCROLL ---------- */
-  const infiniteGrid = document.querySelector('.gallery-page-grid');
+  /* ---------- MAGIC LOOP: GALLERY PAGE INFINITE SCROLL & VIDEO INJECTION ---------- */
+  const masonryGrid = document.getElementById('masonryGrid');
   const trigger = document.getElementById('loadMoreTrigger');
   const loader = document.getElementById('galleryLoader');
+  const videoGrid = document.getElementById('videoGrid');
 
-  if (infiniteGrid && trigger) {
-    // Array of the 10 new images
-    const newImages = [
-      "https://z-cdn-media.chatglm.cn/files/b8f78a4c-ac1b-4fd7-92ac-910ca30457a8.jpg?auth_key=1887155789-edf6e90a764c4d20b27d88d03fdfa473-0-095407898cecb54655e6d3754c7cf6aa",
-      "https://z-cdn-media.chatglm.cn/files/9fd36019-d257-4725-a65e-1e4404cfbac9.jpg?auth_key=1887155789-546866f2948d444688b52c98b0913260-0-638998e948dbb85fbc4824d90cd537af",
-      "https://z-cdn-media.chatglm.cn/files/11a8f749-92af-4d05-9455-b5d456e3cd43.jpg?auth_key=1887155789-41973554f6294d39a417ac8c762880c5-0-4325d9f1cce1527b9a825996e29618b3",
-      "https://z-cdn-media.chatglm.cn/files/7f6fcea6-fb18-4eb8-bf4b-bd4d23983355.jpg?auth_key=1887155789-6805290b535446568a137b0efab80985-0-05bbf107116cbc16e8f57cf18aebdec9",
-      "https://z-cdn-media.chatglm.cn/files/fd001569-b7e8-42f2-8e10-d0b2964c6bf6.jpg?auth_key=1887155789-2b1ff73050634c3f9c7e9812fd79ddbc-0-26ceadfb3874895da8861db4f9f75ad6",
-      "https://z-cdn-media.chatglm.cn/files/c5419702-1245-452c-9c08-53180d56ab30.jpg?auth_key=1887155789-847b2ca1161e444a9b9feda851bede6f-0-b4383473f0f7b2fa79d9ed34ec8fec94",
-      "https://z-cdn-media.chatglm.cn/files/1c16f23f-56b4-4431-9cb0-96e7e72e65d6.jpg?auth_key=1887155789-8cd5b824e7b64765a7853885a05dbb8b-0-3cfe635e7ce066b4da7552593f536f94",
-      "https://z-cdn-media.chatglm.cn/files/1c8d6429-64df-4d84-9418-74ed0c870fa2.jpg?auth_key=1887155789-75df6e9ecc6d4d129bc0a12c9d84f363-0-bcecd6b51864f8e55286954f69d24ce9",
-      "https://z-cdn-media.chatglm.cn/files/5930022f-a758-467d-ac3c-0798e61110f3.jpg?auth_key=1887155789-14eeded02ba649939beaa13ef8a18255-0-a7ba4bfb5a67130bb7f73ac8653f79dd",
-      "https://z-cdn-media.chatglm.cn/files/a942828f-c0c5-4b01-a26e-2a05e6abcf31.jpg?auth_key=1887155789-fe6980774218496fb244c5928b87a192-0-fa2daf46dd499769890cb12c03573643"
-    ];
+  if (masonryGrid && trigger) {
+    // Total files
+    const totalImages = 58;
+    const totalVideos = 8;
+    
+    // Create array of image paths [1.jpg, 2.jpg, ..., 58.jpg]
+    let imageArray = [];
+    for (let i = 1; i <= totalImages; i++) {
+      imageArray.push(`${i}.jpg`);
+    }
+    
+    // Shuffle the array for random display (Fisher-Yates Shuffle)
+    for (let i = imageArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [imageArray[i], imageArray[j]] = [imageArray[j], imageArray[i]];
+    }
 
-    let imageIndex = 0;
+    let loadedImages = 0;
+    const imagesPerLoad = 10; // Load 10 images at a time on scroll
 
-    function loadMoreImages() {
-      if (imageIndex >= newImages.length) {
+    function loadImages() {
+      if (loadedImages >= totalImages) {
         trigger.style.display = 'none';
         return;
       }
 
       loader.style.display = 'block';
 
-      // Simulate a slight network delay for the loader effect
       setTimeout(() => {
-        // Load up to 5 images at a time when scrolled
-        for(let i = 0; i < 5; i++) {
-          if (imageIndex < newImages.length) {
-            const src = newImages[imageIndex];
+        for(let i = 0; i < imagesPerLoad; i++) {
+          if (loadedImages < totalImages) {
+            const src = imageArray[loadedImages];
             const div = document.createElement('div');
             div.className = 'masonry-item reveal-up active';
             div.innerHTML = `
-              <img src="${src}" alt="Gallery Image ${imageIndex + 11}" loading="lazy">
+              <img src="${src}" alt="Langata Nail Lounge Artistry ${loadedImages + 1}" loading="lazy">
               <div class="gallery-hover"><i class="fas fa-expand"></i></div>
             `;
-            infiniteGrid.appendChild(div);
-            imageIndex++;
+            masonryGrid.appendChild(div);
+            loadedImages++;
           }
         }
         
         loader.style.display = 'none';
+        updateLightboxSources(); // Make sure lightbox includes the newly loaded images
         
-        // Update lightbox sources to include the newly added images
-        updateLightboxSources();
-        
-        if (imageIndex >= newImages.length) {
+        if (loadedImages >= totalImages) {
           trigger.style.display = 'none';
         }
-      }, 800);
+      }, 500);
     }
 
-    // Intersection Observer to trigger loading when user scrolls near the bottom
+    // Load the first 10 immediately
+    loadImages();
+
+    // Set up Intersection Observer to trigger loading when user scrolls near the bottom
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        loadMoreImages();
+        loadImages();
       }
-    }, { rootMargin: '200px' }); // Start loading when 200px away from the bottom
+    }, { rootMargin: '200px' }); 
     
     observer.observe(trigger);
+  }
+
+  // Inject Videos into the Video Grid
+  if (videoGrid) {
+    const totalVideos = 8;
+    for (let i = 1; i <= totalVideos; i++) {
+      const videoItem = document.createElement('div');
+      videoItem.className = 'video-gallery-item reveal-up active';
+      videoItem.style.transitionDelay = `${i * 0.1}s`;
+      videoItem.innerHTML = `
+        <video controls preload="metadata">
+          <source src="${i}.mp4#t=0.1" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      `;
+      videoGrid.appendChild(videoItem);
+    }
   }
 
   /* ---------- CUSTOM CURSOR ---------- */
@@ -368,7 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     animateFollower();
 
-    const hoverables = document.querySelectorAll('a, button, .service-item, .masonry-item, input, textarea, .custom-select-trigger, .custom-option');
+    const hoverables = document.querySelectorAll('a, button, .service-item, .masonry-item, input, textarea, .custom-select-trigger, .custom-option, video');
     hoverables.forEach(el => {
       el.addEventListener('mouseenter', () => follower.classList.add('hover'));
       el.addEventListener('mouseleave', () => follower.classList.remove('hover'));

@@ -1,0 +1,16 @@
+{
+  "name": "Langata Nail Lounge",
+  "short_name": "Langata Nails",
+  "description": "Nairobi's premier destination for luxury nail care, floral nail art, and lash artistry.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#C9A961",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

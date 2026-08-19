@@ -718,3 +718,43 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     grid-template-columns: 1fr; /* 1 column on mobile */
   }
 }
+
+/* ============================================
+   DEDICATED GALLERY PAGE - INFINITE SCROLL & MOBILE FIX
+   ============================================ */
+
+/* Infinite Scroll Loader */
+.loader {
+  text-align: center;
+  padding: 40px;
+  color: var(--gold);
+  font-size: 1.5rem;
+}
+.loader i {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* Override Mobile Carousel for Gallery Page to look like Pinterest */
+@media (max-width: 768px) {
+  .gallery-page-grid {
+    display: block !important;
+    overflow-x: hidden !important;
+    column-count: 2 !important; /* 2 columns like Pinterest */
+    column-gap: 16px !important;
+    scroll-snap-type: none !important;
+    padding: 0 16px 30px !important;
+  }
+  .gallery-page-grid .masonry-item {
+    flex: unset !important;
+    scroll-snap-align: none !important;
+    margin-bottom: 16px;
+    break-inside: avoid; /* Ensures images don't split across columns */
+  }
+  .gallery-page-grid .masonry-item img {
+    height: auto !important; /* Allow variable heights for Pinterest feel */
+    min-height: 220px;
+    width: 100%;
+    object-fit: cover;
+  }
+}

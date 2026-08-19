@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Gallery | Langata Nail Lounge</title>
+  <meta name="description" content="Explore the full gallery of Langata Nail Lounge. View our luxury nail artistry, floral designs, and custom manicures in detail." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+  <img src="logo.png" alt="Langata Nail Lounge Logo" class="preloader-logo-img">
+</div>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-text">
+        <span class="logo-main">Langata</span>
+        <span class="logo-sub">Nail Lounge</span>
+      </span>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="index.html#booking" class="btn-nav">Book Now</a></li>
+    </ul>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Close Menu">
+    <i class="fas fa-times"></i>
+  </button>
+  <div class="mobile-menu-inner">
+    <a href="index.html#home" class="mobile-link" data-num="01">Home</a>
+    <a href="index.html#about" class="mobile-link" data-num="02">About</a>
+    <a href="index.html#services" class="mobile-link" data-num="03">Services</a>
+    <a href="gallery.html" class="mobile-link" data-num="04">Gallery</a>
+    <a href="index.html#booking" class="btn mobile-cta">Book Appointment</a>
+    <div class="mobile-social">
+      <a href="https://wa.me/254720158167" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE HEADER -->
+<section class="hero" id="home" style="min-height: 60vh;">
+  <div class="hero-bg" style="background-image: url('https://z-cdn-media.chatglm.cn/files/7520d7ec-c259-4c1e-9afc-22c9ff2be187.jpg?auth_key=1887154753-a5033f6b2c7f4b20a42b61e85f25bec7-0-b78629a04941d274b584e1bb25abc7da');"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag reveal-up">
+      <span class="line"></span>
+      <span>Portfolio · Artistry</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="reveal-up" style="--d:0.1s">Our <em>Gallery</em></span>
+    </h1>
+    <p class="hero-sub reveal-up" style="--d:0.4s">A curated collection of our finest nail art, designs, and lounge moments.</p>
+  </div>
+</section>
+
+<!-- PHOTO GALLERY -->
+<section id="gallery" class="section gallery">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-tag centered">
+        <span class="line"></span>
+        <span>The Artistry</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="section-title centered">Photo <em>Portfolio</em></h2>
+      <p class="section-sub">Click on any image to view it in full detail.</p>
+    </div>
+
+    <!-- Gallery Navigation Buttons (Visible only on mobile for the carousel) -->
+    <div class="gallery-nav">
+      <button id="galleryPrev" aria-label="Previous Gallery Item"><i class="fas fa-chevron-left"></i></button>
+      <button id="galleryNext" aria-label="Next Gallery Item"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Full Grid (All 10 Images) -->
+  <div class="masonry-grid">
+    <!-- 1 -->
+    <div class="masonry-item reveal-up">
+      <img src="https://z-cdn-media.chatglm.cn/files/7520d7ec-c259-4c1e-9afc-22c9ff2be187.jpg?auth_key=1887154753-a5033f6b2c7f4b20a42b61e85f25bec7-0-b78629a04941d274b584e1bb25abc7da" alt="Dark red and pink floral nails with gold beads" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <!-- 2 -->
+    <div class="masonry-item reveal-up" style="--d:0.1s">
+      <img src="https://z-cdn-media.chatglm.cn/files/42dec7ca-5bdb-4409-b830-77a0629456c1.jpg?auth_key=1887154753-e47dd5b1ce4f4381a936002481e00ed8-0-9a3860cb95aab258c8f2da0a845c0c83" alt="Brown long rectangular nails" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <!-- 3 -->
+    <div class="masonry-item reveal-up" style="--d:0.2s">
+      <img src="https://z-cdn-media.chatglm.cn/files/765b6d9f-0ead-457e-abf7-73f2f7fc7992.jpg?auth_key=1887154753-57077f7e8c254fc79d010c7ffdb70b3d-0-47b7bff25ed45aafd66fb085f52dc59c" alt="Crossed hands with dark red glossy nails" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <!-- 4 -->
+    <div class="masonry-item reveal-up" style="--d:0.3s">
+      <img src="https://z-cdn-media.chatglm.cn/files/94ab01f1-6b75-427a-abc0-781ec93d667a.jpg?auth_key=1887154753-1d6b2acebdc54f63b81aa673270d5599-0-d3c0cc6706a86e56b7eb4928e51e9433" alt="Crossed hands close-up dark red gradient nails" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <!-- 5 -->
+    <div class="masonry-item reveal-up" style="--d:0.4s">
+      <img src="https://z-cdn-media.chatglm.cn/files/497ad586-a9be-47f1-a007-d8aa56bb2b68.jpg?auth_key=1887154753-90017a8acf1b4d42a481be152c63f61f-0-a7272b43858212438037dfa64967736d" alt="Crossed hands dark red black nails yellow clothing" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <!-- 6 -->
+    <div class="masonry-item reveal-up" style="--d:0.5s">
+      <img src="https://z-cdn-media.chatglm.cn/files/6272d5b6-fbbe-4c06-b4db-5a1fbab45130.jpg?auth_key=1887154753-bc1e6458427848d19fcad7b6ee09a32f-0-e6ba326b74f966b07abdf712914f0154" alt="Yellow nails with blue borders and flowers" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <!-- 7 -->
+    <div class="masonry-item reveal-up" style="--d:0.6s">
+      <img src="https://z-cdn-media.chatglm.cn/files/7384bd97-e62f-4572-837f-497229b14a0a.jpg?auth_key=1887154753-3be8efa4976c4a6bb09cbee4d8cd937a-0-c16c101bafe4939d0856c831bf2cb3b3" alt="Pointed yellow and pink nails with gold stars" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <!-- 8 -->
+    <div class="masonry-item reveal-up" style="--d:0.7s">
+      <img src="https://z-cdn-media.chatglm.cn/files/92959e48-5536-4648-a7ba-e8487aa96a5e.jpg?auth_key=1887154753-9c9144527abd4138802106e286ec11ba-0-25ee2bbc496d770735f967e7cfda66cc" alt="Yellow and white nails with dots and stripes" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <!-- 9 -->
+    <div class="masonry-item reveal-up" style="--d:0.8s">
+      <img src="https://z-cdn-media.chatglm.cn/files/47a1d86b-89c7-4f9f-ae6f-88debad96525.jpg?auth_key=1887154753-8abad82a38294ebab3c341893ce990af-0-b8b4c12e7d948b2c8c3dc849e0b669b6" alt="Crossed hands yellow white nails salon environment" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    <!-- 10 -->
+    <div class="masonry-item reveal-up" style="--d:0.9s">
+      <img src="https://z-cdn-media.chatglm.cn/files/7645ee7b-396b-4f47-b769-9dcb0b0b1af9.jpg?auth_key=1887154753-73d162cb8e2c46c0a456883c0bed61c7-0-50414371d7b2f975b7a335f21fe1e879" alt="Crossed hands yellow white nails salon environment" loading="lazy">
+      <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+    </div>
+    
+    <!-- To add more photos later, just copy a masonry-item block above and paste it here, changing the src and alt! -->
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close"><i class="fas fa-times"></i></button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+  <div class="lightbox-content">
+    <img src="" id="lightboxImg" alt="Expanded view">
+  </div>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<!-- VIDEO GALLERY -->
+<section id="video-gallery" class="section video-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-tag centered">
+        <span class="line"></span>
+        <span>In Motion</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="section-title centered">Video <em>Portfolio</em></h2>
+      <p class="section-sub">Watch the artistry come alive.</p>
+    </div>
+
+    <div class="video-gallery-grid">
+      <!-- Video Item 1 -->
+      <div class="video-gallery-item reveal-up">
+        <video controls preload="metadata">
+          <source src="video.mp4#t=0.1" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      
+      <!-- Video Item 2 (Placeholder) -->
+      <!-- To add more videos, just copy the block above and paste it below, changing the src! -->
+      <!-- <div class="video-gallery-item reveal-up" style="--d:0.2s">
+        <video controls preload="metadata">
+          <source src="video2.mp4#t=0.1" type="video/mp4">
+        </video>
+      </div> -->
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Langata Nail Lounge Logo" class="footer-logo-img">
+        <p>Nairobi's destination for luxury nail care, custom floral designs, and a relaxing experience worth returning to.</p>
+        <div class="footer-social">
+          <a href="https://wa.me/254720158167" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="index.html#services">Manicures</a></li>
+          <li><a href="index.html#services">Acrylics</a></li>
+          <li><a href="index.html#services">Nail Art</a></li>
+          <li><a href="index.html#services">Lash Extensions</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Visit Us</h4>
+        <ul class="footer-contact">
+          <li><i class="fas fa-location-dot"></i> Langata Road, Nairobi</li>
+          <li><i class="fas fa-phone"></i> <a href="tel:+254720158167">0720 158 167</a></li>
+          <li><i class="fas fa-clock"></i> Mon – Sun · 8AM – 9PM</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p>© 2026 Langata Nail Lounge. All rights reserved.</p>
+      <p class="credit">Engineered for a flawless finish — <a href="https://dw33py.netlify.app" target="_blank" rel="noopener">Dw33pY</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<a href="https://wa.me/254720158167" class="whatsapp-btn" target="_blank" aria-label="WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+  <span class="wa-pulse"></span>
+</a>
+<button id="backToTop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+<script src="main.js"></script>
+</body>
+</html>

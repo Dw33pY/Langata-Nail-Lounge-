@@ -117,8 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ---------- MOBILE GALLERY CAROUSEL NAVIGATION ---------- */
-  const galleryGrid = document.querySelector('.masonry-grid');
+  /* ---------- MOBILE GALLERY CAROUSEL NAVIGATION (Index Page Only) ---------- */
+  const galleryGrid = document.querySelector('.masonry-grid:not(.gallery-page-grid)');
   const galleryPrev = document.getElementById('galleryPrev');
   const galleryNext = document.getElementById('galleryNext');
 
@@ -139,29 +139,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const hiddenInput = customSelect.querySelector('input[type="hidden"]');
     const selectText = customSelect.querySelector('.custom-select-text');
 
-    // Open/Close dropdown
     trigger.addEventListener('click', () => {
       customSelect.classList.toggle('open');
     });
 
-    // Select option
     options.forEach(option => {
       option.addEventListener('click', () => {
         const value = option.getAttribute('data-value');
         hiddenInput.value = value;
         selectText.textContent = value;
-        selectText.classList.remove('placeholder'); // Remove muted color
+        selectText.classList.remove('placeholder'); 
         
-        // Remove selected from all, add to clicked
         options.forEach(opt => opt.classList.remove('selected'));
         option.classList.add('selected');
         
-        // Close dropdown
         customSelect.classList.remove('open');
       });
     });
 
-    // Close if clicked outside
     document.addEventListener('click', (e) => {
       if (!customSelect.contains(e.target)) {
         customSelect.classList.remove('open');
@@ -179,15 +174,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const formData = new FormData(bookingForm);
       const name = formData.get('name');
       const phone = formData.get('phone');
-      const service = formData.get('service'); // Gets value from our hidden input
+      const service = formData.get('service'); 
       const date = formData.get('date');
       const notes = formData.get('notes');
 
-      // Simple validation to ensure custom dropdown was selected
       if (!service) {
         formNote.textContent = 'Please select a service.';
         formNote.className = 'form-note';
-        formNote.style.color = '#D4A5A5'; // Rose color for error
+        formNote.style.color = '#D4A5A5'; 
         return;
       }
 
@@ -196,13 +190,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       formNote.textContent = 'Redirecting to WhatsApp...';
       formNote.className = 'form-note success';
-      formNote.style.color = ''; // Reset color
+      formNote.style.color = ''; 
 
       setTimeout(() => {
         window.open(waUrl, '_blank');
         bookingForm.reset();
         
-        // Reset custom dropdown visually
         const selectText = document.querySelector('.custom-select-text');
         const hiddenInput = document.getElementById('service');
         const options = document.querySelectorAll('.custom-option');
@@ -218,19 +211,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------- LIGHTBOX FUNCTIONALITY ---------- */
+  /* ---------- LIGHTBOX FUNCTIONALITY (Dynamic for Infinite Scroll) ---------- */
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
   const lightboxPrev = document.getElementById('lightboxPrev');
   const lightboxNext = document.getElementById('lightboxNext');
   const lightboxCounter = document.getElementById('lightboxCounter');
-  const galleryItems = document.querySelectorAll('.masonry-item');
+  
   let currentImageIndex = 0;
-  const imageSources = Array.from(galleryItems).map(item => item.querySelector('img').src);
+  let imageSources = []; 
+
+  // Function to update lightbox sources (called on load and after new images load)
+  function updateLightboxSources() {
+    const galleryItems = document.querySelectorAll('.masonry-item');
+    imageSources = Array.from(galleryItems).map(item => item.querySelector('img').src);
+    
+    // Attach click listeners to any items that don't have them yet
+    galleryItems.forEach((item, index) => {
+      if (!item.dataset.lightboxListener) {
+        item.addEventListener('click', () => openLightbox(index));
+        item.dataset.lightboxListener = "true";
+      }
+    });
+  }
 
   const openLightbox = (index) => {
     currentImageIndex = index;
+    // Ensure index stays in bounds
+    if (currentImageIndex >= imageSources.length) currentImageIndex = 0;
+    if (currentImageIndex < 0) currentImageIndex = imageSources.length - 1;
+    
     lightboxImg.src = imageSources[currentImageIndex];
     lightboxCounter.textContent = `${currentImageIndex + 1} / ${imageSources.length}`;
     lightbox.classList.add('active');
@@ -242,23 +253,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = '';
   };
 
-  const showPrev = () => {
-    currentImageIndex = (currentImageIndex - 1 + imageSources.length) % imageSources.length;
-    openLightbox(currentImageIndex);
-  };
+  const showPrev = () => { openLightbox(currentImageIndex - 1); };
+  const showNext = () => { openLightbox(currentImageIndex + 1); };
 
-  const showNext = () => {
-    currentImageIndex = (currentImageIndex + 1) % imageSources.length;
-    openLightbox(currentImageIndex);
-  };
-
-  galleryItems.forEach((item, index) => {
-    item.addEventListener('click', () => openLightbox(index));
-  });
-
-  lightboxClose.addEventListener('click', closeLightbox);
-  lightboxPrev.addEventListener('click', showPrev);
-  lightboxNext.addEventListener('click', showNext);
+  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+  if (lightboxPrev) lightboxPrev.addEventListener('click', showPrev);
+  if (lightboxNext) lightboxNext.addEventListener('click', showNext);
 
   let touchStartX = 0;
   lightbox.addEventListener('touchstart', (e) => {
@@ -273,6 +273,77 @@ document.addEventListener('DOMContentLoaded', () => {
       else showPrev();
     }
   }, false);
+
+  // Initial population of lightbox sources
+  updateLightboxSources();
+
+  /* ---------- GALLERY PAGE INFINITE SCROLL ---------- */
+  const infiniteGrid = document.querySelector('.gallery-page-grid');
+  const trigger = document.getElementById('loadMoreTrigger');
+  const loader = document.getElementById('galleryLoader');
+
+  if (infiniteGrid && trigger) {
+    // Array of the 10 new images
+    const newImages = [
+      "https://z-cdn-media.chatglm.cn/files/b8f78a4c-ac1b-4fd7-92ac-910ca30457a8.jpg?auth_key=1887155789-edf6e90a764c4d20b27d88d03fdfa473-0-095407898cecb54655e6d3754c7cf6aa",
+      "https://z-cdn-media.chatglm.cn/files/9fd36019-d257-4725-a65e-1e4404cfbac9.jpg?auth_key=1887155789-546866f2948d444688b52c98b0913260-0-638998e948dbb85fbc4824d90cd537af",
+      "https://z-cdn-media.chatglm.cn/files/11a8f749-92af-4d05-9455-b5d456e3cd43.jpg?auth_key=1887155789-41973554f6294d39a417ac8c762880c5-0-4325d9f1cce1527b9a825996e29618b3",
+      "https://z-cdn-media.chatglm.cn/files/7f6fcea6-fb18-4eb8-bf4b-bd4d23983355.jpg?auth_key=1887155789-6805290b535446568a137b0efab80985-0-05bbf107116cbc16e8f57cf18aebdec9",
+      "https://z-cdn-media.chatglm.cn/files/fd001569-b7e8-42f2-8e10-d0b2964c6bf6.jpg?auth_key=1887155789-2b1ff73050634c3f9c7e9812fd79ddbc-0-26ceadfb3874895da8861db4f9f75ad6",
+      "https://z-cdn-media.chatglm.cn/files/c5419702-1245-452c-9c08-53180d56ab30.jpg?auth_key=1887155789-847b2ca1161e444a9b9feda851bede6f-0-b4383473f0f7b2fa79d9ed34ec8fec94",
+      "https://z-cdn-media.chatglm.cn/files/1c16f23f-56b4-4431-9cb0-96e7e72e65d6.jpg?auth_key=1887155789-8cd5b824e7b64765a7853885a05dbb8b-0-3cfe635e7ce066b4da7552593f536f94",
+      "https://z-cdn-media.chatglm.cn/files/1c8d6429-64df-4d84-9418-74ed0c870fa2.jpg?auth_key=1887155789-75df6e9ecc6d4d129bc0a12c9d84f363-0-bcecd6b51864f8e55286954f69d24ce9",
+      "https://z-cdn-media.chatglm.cn/files/5930022f-a758-467d-ac3c-0798e61110f3.jpg?auth_key=1887155789-14eeded02ba649939beaa13ef8a18255-0-a7ba4bfb5a67130bb7f73ac8653f79dd",
+      "https://z-cdn-media.chatglm.cn/files/a942828f-c0c5-4b01-a26e-2a05e6abcf31.jpg?auth_key=1887155789-fe6980774218496fb244c5928b87a192-0-fa2daf46dd499769890cb12c03573643"
+    ];
+
+    let imageIndex = 0;
+
+    function loadMoreImages() {
+      if (imageIndex >= newImages.length) {
+        trigger.style.display = 'none';
+        return;
+      }
+
+      loader.style.display = 'block';
+
+      // Simulate a slight network delay for the loader effect
+      setTimeout(() => {
+        // Load up to 5 images at a time when scrolled
+        for(let i = 0; i < 5; i++) {
+          if (imageIndex < newImages.length) {
+            const src = newImages[imageIndex];
+            const div = document.createElement('div');
+            div.className = 'masonry-item reveal-up active';
+            div.innerHTML = `
+              <img src="${src}" alt="Gallery Image ${imageIndex + 11}" loading="lazy">
+              <div class="gallery-hover"><i class="fas fa-expand"></i></div>
+            `;
+            infiniteGrid.appendChild(div);
+            imageIndex++;
+          }
+        }
+        
+        loader.style.display = 'none';
+        
+        // Update lightbox sources to include the newly added images
+        updateLightboxSources();
+        
+        if (imageIndex >= newImages.length) {
+          trigger.style.display = 'none';
+        }
+      }, 800);
+    }
+
+    // Intersection Observer to trigger loading when user scrolls near the bottom
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadMoreImages();
+      }
+    }, { rootMargin: '200px' }); // Start loading when 200px away from the bottom
+    
+    observer.observe(trigger);
+  }
 
   /* ---------- CUSTOM CURSOR ---------- */
   const cursor = document.getElementById('cursor');

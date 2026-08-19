@@ -635,7 +635,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .lightbox-next { right: 10px; }
   .lightbox-close { top: 15px; right: 15px; }
 
-  /* --- Mobile Gallery Carousel Layout --- */
+  /* --- Mobile Gallery Carousel Layout (Home Page) --- */
   .gallery-nav {
     display: flex;
     justify-content: center;
@@ -680,18 +680,35 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     width: 100%;
     object-fit: cover;         
   }
+  
+  /* Video gallery goes to 1 column on mobile */
+  .video-gallery-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ============================================
-   DEDICATED GALLERY PAGE - VIDEO GALLERY
+   DEDICATED GALLERY PAGE - INFINITE SCROLL, VIDEOS & MOBILE FIX
    ============================================ */
+
+/* Infinite Scroll Loader */
+.loader {
+  text-align: center;
+  padding: 40px;
+  color: var(--gold);
+  font-size: 1.5rem;
+}
+.loader i {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
 
 /* Video Gallery Grid Layout */
 .video-gallery-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 2 columns on desktop */
   gap: 24px;
-  max-width: 1000px; /* Keeps videos from getting too massive */
+  max-width: 1000px; 
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -709,31 +726,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   width: 100%;
   display: block;
   height: 100%;
-  object-fit: cover; /* Ensures videos fill the box nicely */
+  object-fit: cover; 
 }
-
-/* Mobile responsiveness for Video Gallery */
-@media (max-width: 768px) {
-  .video-gallery-grid {
-    grid-template-columns: 1fr; /* 1 column on mobile */
-  }
-}
-
-/* ============================================
-   DEDICATED GALLERY PAGE - INFINITE SCROLL & MOBILE FIX
-   ============================================ */
-
-/* Infinite Scroll Loader */
-.loader {
-  text-align: center;
-  padding: 40px;
-  color: var(--gold);
-  font-size: 1.5rem;
-}
-.loader i {
-  animation: spin 1s linear infinite;
-}
-@keyframes spin { 100% { transform: rotate(360deg); } }
 
 /* Override Mobile Carousel for Gallery Page to look like Pinterest */
 @media (max-width: 768px) {

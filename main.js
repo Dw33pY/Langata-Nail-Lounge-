@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------- LIGHTBOX FUNCTIONALITY (Dynamic & HD Optimized) ---------- */
+  /* ---------- LIGHTBOX FUNCTIONALITY (Dynamic & HD) ---------- */
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
@@ -230,7 +230,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateLightboxSources() {
     const galleryItems = document.querySelectorAll('.masonry-item');
-    // Map to the HD full-resolution source stored in data-fullsrc
     imageSources = Array.from(galleryItems).map(item => {
       const img = item.querySelector('img');
       return img.dataset.fullsrc || img.src;
@@ -293,14 +292,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalImages = 58;
     
     let imageArray = [];
+    // Sequential array [1.jpg, 2.jpg, ..., 58.jpg] for perfect CDN caching
     for (let i = 1; i <= totalImages; i++) {
       imageArray.push(`${i}.jpg`);
-    }
-    
-    // Shuffle array for random display
-    for (let i = imageArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [imageArray[i], imageArray[j]] = [imageArray[j], imageArray[i]];
     }
 
     let loadedImages = 0;
@@ -314,22 +308,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
       loader.style.display = 'block';
 
-      // Use requestAnimationFrame to prevent blocking the UI
-      requestAnimationFrame(() => {
+      // Small timeout to allow loader to visually render without freezing UI
+      setTimeout(() => {
         for(let i = 0; i < imagesPerLoad; i++) {
           if (loadedImages < totalImages) {
             const src = imageArray[loadedImages];
-            
-            // Vercel's Magic Image Optimizer: shrinks image to 640px width and 70% quality on the fly
-            const optimizedSrc = `/_vercel/image?url=/${src}&w=640&q=70`;
-            
             const div = document.createElement('div');
             div.className = 'masonry-item reveal-up active';
             
-            // data-fullsrc stores the HD version for the lightbox
-            // inline style opacity + onload fades the image in smoothly
+            // Removed Vercel Optimizer to fix 404 errors. 
+            // Loading raw image directly with fade-in effect.
             div.innerHTML = `
-              <img src="${optimizedSrc}" data-fullsrc="${src}" alt="Langata Nail Lounge Artistry ${loadedImages + 1}" loading="lazy" decoding="async" fetchpriority="low" style="opacity: 0; transition: opacity 0.5s ease;" onload="this.style.opacity=1;">
+              <img src="${src}" data-fullsrc="${src}" alt="Langata Nail Lounge Artistry ${loadedImages + 1}" loading="lazy" decoding="async" fetchpriority="low" style="opacity: 0; transition: opacity 0.5s ease;" onload="this.style.opacity=1;">
               <div class="gallery-hover"><i class="fas fa-expand"></i></div>
             `;
             masonryGrid.appendChild(div);
@@ -343,7 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (loadedImages >= totalImages) {
           trigger.style.display = 'none';
         }
-      });
+      }, 200);
     }
 
     loadImages();
@@ -365,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
       videoItem.className = 'video-gallery-item reveal-up active';
       videoItem.style.transitionDelay = `${i * 0.1}s`;
       
-      // preload="none" stops the browser from downloading the video until the user clicks play!
+      // preload="none" stops the browser from downloading the video until the user clicks play
       videoItem.innerHTML = `
         <video controls preload="none" playsinline>
           <source src="${i}.mp4#t=0.1" type="video/mp4">

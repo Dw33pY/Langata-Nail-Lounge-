@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------- LIGHTBOX FUNCTIONALITY (Dynamic) ---------- */
+  /* ---------- LIGHTBOX FUNCTIONALITY (Dynamic & HD Optimized) ---------- */
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
@@ -230,7 +230,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateLightboxSources() {
     const galleryItems = document.querySelectorAll('.masonry-item');
-    imageSources = Array.from(galleryItems).map(item => item.querySelector('img').src);
+    // Map to the HD full-resolution source stored in data-fullsrc
+    imageSources = Array.from(galleryItems).map(item => {
+      const img = item.querySelector('img');
+      return img.dataset.fullsrc || img.src;
+    });
     
     galleryItems.forEach((item, index) => {
       if (!item.dataset.lightboxListener) {
@@ -286,24 +290,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const videoGrid = document.getElementById('videoGrid');
 
   if (masonryGrid && trigger) {
-    // Total files
     const totalImages = 58;
-    const totalVideos = 8;
     
-    // Create array of image paths [1.jpg, 2.jpg, ..., 58.jpg]
     let imageArray = [];
     for (let i = 1; i <= totalImages; i++) {
       imageArray.push(`${i}.jpg`);
     }
     
-    // Shuffle the array for random display (Fisher-Yates Shuffle)
+    // Shuffle array for random display
     for (let i = imageArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [imageArray[i], imageArray[j]] = [imageArray[j], imageArray[i]];
     }
 
     let loadedImages = 0;
-    const imagesPerLoad = 10; // Load 10 images at a time on scroll
+    const imagesPerLoad = 10;
 
     function loadImages() {
       if (loadedImages >= totalImages) {
@@ -313,14 +314,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
       loader.style.display = 'block';
 
-      setTimeout(() => {
+      // Use requestAnimationFrame to prevent blocking the UI
+      requestAnimationFrame(() => {
         for(let i = 0; i < imagesPerLoad; i++) {
           if (loadedImages < totalImages) {
             const src = imageArray[loadedImages];
+            
+            // Vercel's Magic Image Optimizer: shrinks image to 640px width and 70% quality on the fly
+            const optimizedSrc = `/_vercel/image?url=/${src}&w=640&q=70`;
+            
             const div = document.createElement('div');
             div.className = 'masonry-item reveal-up active';
+            
+            // data-fullsrc stores the HD version for the lightbox
+            // inline style opacity + onload fades the image in smoothly
             div.innerHTML = `
-              <img src="${src}" alt="Langata Nail Lounge Artistry ${loadedImages + 1}" loading="lazy">
+              <img src="${optimizedSrc}" data-fullsrc="${src}" alt="Langata Nail Lounge Artistry ${loadedImages + 1}" loading="lazy" decoding="async" fetchpriority="low" style="opacity: 0; transition: opacity 0.5s ease;" onload="this.style.opacity=1;">
               <div class="gallery-hover"><i class="fas fa-expand"></i></div>
             `;
             masonryGrid.appendChild(div);
@@ -329,18 +338,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         loader.style.display = 'none';
-        updateLightboxSources(); // Make sure lightbox includes the newly loaded images
+        updateLightboxSources(); 
         
         if (loadedImages >= totalImages) {
           trigger.style.display = 'none';
         }
-      }, 500);
+      });
     }
 
-    // Load the first 10 immediately
     loadImages();
 
-    // Set up Intersection Observer to trigger loading when user scrolls near the bottom
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         loadImages();
@@ -357,8 +364,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const videoItem = document.createElement('div');
       videoItem.className = 'video-gallery-item reveal-up active';
       videoItem.style.transitionDelay = `${i * 0.1}s`;
+      
+      // preload="none" stops the browser from downloading the video until the user clicks play!
       videoItem.innerHTML = `
-        <video controls preload="metadata">
+        <video controls preload="none" playsinline>
           <source src="${i}.mp4#t=0.1" type="video/mp4">
           Your browser does not support the video tag.
         </video>
